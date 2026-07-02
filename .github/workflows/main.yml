@@ -13,20 +13,20 @@ jobs:
         java: [ 17 ]
       fail-fast: true
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4 # Atualizado para v4
       - name: JDK ${{ matrix.java }}
-        uses: actions/setup-java@v3.6.0
+        uses: actions/setup-java@v4 # Atualizado para v4
         with:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v3 # Versão moderna e oficial do Gradle
       - name: Build
         run: ./gradlew build
 
-      # ================= O QUE ESTAVA FALTANDO AQUI: =================
+      # ================= VERSÃO CORRIGIDA (v4) =================
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: AxiomPaperPlugin-JAR
-          path: build/libs/*.jar  # Caminho padrão onde o Gradle joga o .jar gerado
+          path: build/libs/*.jar
