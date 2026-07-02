@@ -6,7 +6,6 @@ on:
 
 jobs:
   build:
-    # Only run on PRs if the source branch is on someone else's repo
     if: ${{ github.event_name != 'pull_request' || github.repository != github.event.pull_request.head.repo.full_name }}
     runs-on: ubuntu-latest
     strategy:
@@ -24,3 +23,10 @@ jobs:
         uses: gradle/gradle-build-action@v2
       - name: Build
         run: ./gradlew build
+
+      # ================= O QUE ESTAVA FALTANDO AQUI: =================
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: AxiomPaperPlugin-JAR
+          path: build/libs/*.jar  # Caminho padrão onde o Gradle joga o .jar gerado
